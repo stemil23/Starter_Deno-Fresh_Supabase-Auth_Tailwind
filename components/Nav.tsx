@@ -8,6 +8,7 @@ interface NavProps {
 export default function Nav({ loggedIn }: NavProps) {
   const staticMenus = [
     { name: "About", href: "/about", id: "about" },
+    { name: "Instructions", href: "/instructions", id: "instructions" },
   ];
 
   return (

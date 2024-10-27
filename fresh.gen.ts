@@ -9,6 +9,7 @@ import * as $auth_middleware from "./routes/auth/_middleware.ts";
 import * as $auth_dashboard from "./routes/auth/dashboard.tsx";
 import * as $auth_welcome from "./routes/auth/welcome.tsx";
 import * as $index from "./routes/index.tsx";
+import * as $instructions from "./routes/instructions.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $logout from "./routes/logout.tsx";
 import * as $signup from "./routes/signup.tsx";
@@ -24,6 +25,7 @@ const manifest = {
     "./routes/auth/dashboard.tsx": $auth_dashboard,
     "./routes/auth/welcome.tsx": $auth_welcome,
     "./routes/index.tsx": $index,
+    "./routes/instructions.tsx": $instructions,
     "./routes/login.tsx": $login,
     "./routes/logout.tsx": $logout,
     "./routes/signup.tsx": $signup,
