@@ -1,5 +1,5 @@
 {
-  "version": "4",
+  "version": "3",
   "specifiers": {
     "npm:autoprefixer@10.4.17": "10.4.17_postcss@8.4.35",
     "npm:cssnano@6.0.3": "6.0.3_postcss@8.4.35",

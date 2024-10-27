@@ -21,7 +21,10 @@ jobs:
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.37.0  # Specify a more recent version
+          deno-version: v1.x  # Use the latest stable version
+
+      - name: Remove existing lockfile
+        run: rm -f deno.lock
 
       - name: Build step
         run: "deno task build"
