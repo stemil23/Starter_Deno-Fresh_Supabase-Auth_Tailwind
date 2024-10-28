@@ -9,6 +9,9 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    env:
+      EDGEDB_DSN: ${{ secrets.EDGEDB_DSN }}
+      EDGEDB_CLIENT_TLS_SECURITY: insecure
 
     permissions:
       id-token: write # Needed for auth with Deno Deploy
@@ -31,6 +34,7 @@ jobs:
         with:
           project: "stinstewmil-starter-den-94"
           entrypoint: "main.ts"
+        env:
           root: "."
           
           
