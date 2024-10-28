@@ -8,3 +8,9 @@ const client = edgedb.createHttpClient({
 
 export default client;
 export { e };
+
+
+// const client = edgedb.createHttpClient({
+//     instanceName: Deno.env.get("EDGEDB_CLOUD_INSTANCE") || "",
+//     secretKey: Deno.env.get("EDGEDB_CLOUD_KEY") || ""
+// });
