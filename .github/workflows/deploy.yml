@@ -28,6 +28,9 @@ jobs:
 
       - name: Delete lockfile
         run: rm -f deno.lock
+
+      - name: Generate edgedb models
+        run: "deno task edgedbgen"
           
       - name: Build step
         run: "deno task build"
@@ -35,7 +38,7 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "stinstewmil-starter-den-94"
+          project: "fresh-supabase-edgedb"
           entrypoint: "main.ts"
         env:
           root: "."
