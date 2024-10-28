@@ -1,0 +1,36 @@
+name: Deploy
+on:
+  push:
+    branches: version-1-edgedb-cloud-setup
+  pull_request:
+    branches: version-1-edgedb-cloud-setup
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # Needed for auth with Deno Deploy
+      contents: read # Needed to clone the repository
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v1.x
+
+      - name: Build step
+        run: "rm -f deno.lock && edgedb project init && deno run --allow-all --unstable https://deno.land/x/edgedb/generate.ts edgeql-js --output-dir=./db/edgeql-js --target deno && deno run -A dev.ts build"
+
+      - name: Upload to Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: "stin23-fresh-edgedb"
+          entrypoint: "main.ts"
+          root: ""
+          
+          
