@@ -2,6 +2,9 @@
   "tasks": {
     "start": "deno run -A --watch=static/,routes/ dev.ts",
     "build": "deno run -A dev.ts build",
+    "lockdelete": "rm -f deno.lock",
+    "edgedbgen": "deno run --allow-all --unstable https://deno.land/x/edgedb/generate.ts edgeql-js --target deno",
+    "deploy": "deno task lockdelete && deno task edgedbgen && deno run build",
     "preview": "deno run -A main.ts"
   },
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
