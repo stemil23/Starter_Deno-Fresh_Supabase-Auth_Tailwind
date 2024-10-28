@@ -9,6 +9,9 @@ export default function Nav({ loggedIn }: NavProps) {
   const staticMenus = [
     { name: "About", href: "/about", id: "about" },
     { name: "Instructions", href: "/instructions", id: "instructions" },
+    { name: "DB Test", href: "/db-test", id: "db-test" },
+    { name: "DB Test API", href: "/db-test-api", id: "db-test-api" },
+
   ];
 
   return (
