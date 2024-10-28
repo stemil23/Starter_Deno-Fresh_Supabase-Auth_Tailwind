@@ -1,41 +1,43 @@
 name: Deploy
-
 on:
   push:
-    branches: [version-1-edgedb-cloud-setup]
+    branches: version-1-edgedb-cloud-setup
   pull_request:
-    branches: [version-1-edgedb-cloud-setup]
+    branches: version-1-edgedb-cloud-setup
 
 jobs:
   deploy:
-    name: Deploy to Deno Deploy
+    name: Deploy
     runs-on: ubuntu-latest
-
     env:
+      EDGEDB_DSN: ${{ secrets.EDGEDB_DSN }}
       EDGEDB_CLIENT_TLS_SECURITY: insecure
 
     permissions:
-      id-token: write         # Required for authentication with Deno Deploy
-      contents: read          # Required to clone the repository
+      id-token: write # Needed for auth with Deno Deploy
+      contents: read # Needed to clone the repository
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Clone repository
+        uses: actions/checkout@v4
 
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.41.0
 
-      - name: Set EDGEDB Environment Variables
-        run: |
-          echo "EDGEDB_DSN=${{ secrets.EDGEDB_DSN }}" >> $GITHUB_ENV
+      - name: Delete lockfile
+        run: rm -f deno.lock
+          
+      - name: Build step
+        run: "deno task build"
 
-      - name: Run Build Task
-        run: deno task build
-
-      - name: Deploy to Deno
+      - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
           project: "stinstewmil-starter-den-94"
           entrypoint: "main.ts"
+        env:
+          root: "."
+          
+          
