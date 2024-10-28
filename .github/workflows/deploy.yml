@@ -31,6 +31,6 @@ jobs:
         with:
           project: "stinstewmil-starter-den-94"
           entrypoint: "main.ts"
-          root: "."
+          root: ""
           
           
