@@ -4,3 +4,4 @@ _fresh/
 node_modules/
 db/edgeql-js
 deno.lock
+.github/workflows/deploy.yml
