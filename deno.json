@@ -4,9 +4,8 @@
     "build": "deno run -A dev.ts build",
     "lockdelete": "deno task lockdelete-file",
     "lockdelete-file": "rm -f deno.lock",
-    "edgedbinit": "edgedb project init",
     "edgedbgen": "deno run --allow-env --allow-net --allow-read --allow-write --unstable https://deno.land/x/edgedb/generate.ts edgeql-js --output-dir=./db/edgeql-js --target deno",
-    "deploy": "deno task lockdelete && deno task edgedbinit && deno task edgedbgen && deno task build",
+    "deploy": "deno task lockdelete && deno task edgedbgen && deno task build",
     "preview": "deno run -A main.ts"
   },
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
