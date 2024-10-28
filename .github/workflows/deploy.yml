@@ -29,6 +29,9 @@ jobs:
       - name: Delete lockfile
         run: rm -f deno.lock
 
+      - name: Initialize edgedb project
+        run: "deno task edgedbinit"
+
       - name: Generate edgedb models
         run: "deno task edgedbgen"
           
