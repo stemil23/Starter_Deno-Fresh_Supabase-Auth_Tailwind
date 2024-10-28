@@ -6,7 +6,7 @@ import { State } from "./_middleware.ts";
 import EdgeDBCloudTest from "../islands/ApiEdgeDbMovies.tsx";
 // import client from "../db.ts";
 import client from "../dbCloud.ts";
-import e from "$generated/index.ts";
+import { e } from "../dbjs/index.ts";
 
 interface Movie {
   id: string;
