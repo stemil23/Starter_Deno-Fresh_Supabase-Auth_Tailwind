@@ -21,18 +21,15 @@ jobs:
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.x  # Use the latest stable version
-
-      - name: Remove existing lockfile
-        run: rm -f deno.lock
+          deno-version: v1.x
 
       - name: Build step
-        run: "deno task build"
+        run: "deno task build, deno run --allow-all --unstable https://deno.land/x/edgedb/generate.ts edgeql-js --target deno"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "stinstewmil-starter-den-85"
+          project: "stinstewmil-starter-den-94"
           entrypoint: "main.ts"
           root: "."
           
