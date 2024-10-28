@@ -1,4 +1,4 @@
-
+using extension edgeql_http;
 module default {
   type Person {
     required name: str;
