@@ -23,14 +23,6 @@ jobs:
         with:
           deno-version: v2.x
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-
-      - name: Install step
-        run: "deno run --allow-all --unstable https://deno.land/x/edgedb/generate.ts edgeql-js"
-
       - name: Build step
         run: "rm -f deno.lock && deno task build "
 
