@@ -1,10 +1,10 @@
-import { createHttpClient } from "edgedb";
+import { createClient } from "edgedb";
 import e from "$generated/index.ts";
 
-const client = createHttpClient({
-    instanceName: Deno.env.get("EDGEDB_DSN"),
-    secretKey: Deno.env.get("EDGEDB_SECRET_KEY"),
-    tlsSecurity: "insecure"
+const client = createClient({
+    dsn: Deno.env.get("EDGEDB_DSN"),
+    secretKey: Deno.env.get("EDGEDB_CLOUD_KEY"),
+    tlsSecurity: "strict"
   });
 
 export default client;

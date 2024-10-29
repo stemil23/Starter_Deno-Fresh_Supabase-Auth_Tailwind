@@ -2,12 +2,9 @@ import * as edgedb from "edgedb";
 import e from "$generated/index.ts";
 
 const client = edgedb.createHttpClient({
-    host: "mydb--stemil23.c-78.i.aws.edgedb.cloud",
-    port: 5656,
-    database: "main",
-    tlsSecurity: "strict",
-    secretKey: Deno.env.get("EDGEDB_SECRET_KEY"),
-    user: "edgedb",
+  dsn: Deno.env.get("EDGEDB_DSN"),
+  secretKey: Deno.env.get("EDGEDB_CLOUD_KEY"),
+  tlsSecurity: "insecure"
 });
 
 export default client;
