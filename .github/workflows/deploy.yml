@@ -24,7 +24,7 @@ jobs:
           deno-version: v2.x
 
       - name: Build step
-        run: "rm -f deno.lock && deno task build"
+        run: "rm -f deno.lock && deno task build --allow-net --allow-env"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
