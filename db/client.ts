@@ -1,5 +1,5 @@
 import * as edgedb from "edgedb";
-import e from "$generated/index.ts";
+import { e } from "../dbschema/edgeql-js/index.ts";
 
 function isDenoDeployEnvironment() {
   // Check if we're running in Deno Deploy by checking if permissions API is unavailable

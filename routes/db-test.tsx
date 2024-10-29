@@ -5,9 +5,8 @@ import Layout from "../components/Layout.tsx";
 import { State } from "./_middleware.ts";
 import EdgeDBMovies from "../components/SsrEdgeDBMovies.tsx";
 import { Movie } from "../components/SsrEdgeDBMovies.tsx";
-import e from "$generated/index.ts";
 import client from "../dbCloud.ts";
-
+import { e } from "../dbCloud.ts";
 // Add interface for the page data
 interface PageData extends State {
   movies: Movie[];

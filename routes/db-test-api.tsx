@@ -4,10 +4,10 @@ import Layout from "../components/Layout.tsx";
 // import HeroAbout from "../components/HeroAbout.tsx";
 import { State } from "./_middleware.ts";
 import EdgeDBCloudTest from "../islands/ApiEdgeDbMovies.tsx";
-// import client from "../db.ts";
+// import e { client } from "$generated/index.ts";
 import client from "../dbCloud.ts";
-import e from "$generated/index.ts";
-
+import { e } from "../dbCloud.ts";
+ 
 interface Movie {
   id: string;
   title: string | null;
