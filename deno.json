@@ -21,9 +21,7 @@
     "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
     "$std/": "https://deno.land/std@0.216.0/",
     "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.21.0",
-    "edgedb": "https://deno.land/x/edgedb@v1.4.1/mod.ts",
-    "edgedb/": "https://deno.land/x/edgedb@v1.4.1/",
-    "$generated/": "./dbschema/edgeql-js/"
+    "edgedb": "npm:edgedb"
   },
   "lint": {
     "rules": {

@@ -6,7 +6,7 @@ import { State } from "./_middleware.ts";
 import EdgeDBMovies from "../components/SsrEdgeDBMovies.tsx";
 import { Movie } from "../components/SsrEdgeDBMovies.tsx";
 import client from "../dbCloud.ts";
-import { e } from "../dbCloud.ts";
+// import { e } from "../dbCloud.ts";
 // Add interface for the page data
 interface PageData extends State {
   movies: Movie[];
@@ -15,19 +15,21 @@ interface PageData extends State {
 export const handler: Handlers<PageData, State> = {
   async GET(_req, ctx) {
     try {
-      const query = e.select(e.Movie, (movie) => ({
-        id: true,
-        title: true,
-        actors: (actor) => ({
-          name: true,
-        }),
-      }));
+      const query = `
+        SELECT Movie {
+          id,
+          title,
+          actors: {
+            name
+          }
+        }
+      `;
 
-      const movies = await query.run(client);
+      const movies = await client.query(query);
       
       return ctx.render({
         ...ctx.state,
-        movies: movies as Movie[],  // Add type assertion here
+        movies: movies as Movie[],
       });
     } catch (error) {
       console.error('Database query failed:', error);
