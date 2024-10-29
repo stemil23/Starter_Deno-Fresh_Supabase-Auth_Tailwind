@@ -6,7 +6,7 @@ import { State } from "./_middleware.ts";
 import EdgeDBMovies from "../components/SsrEdgeDBMovies.tsx";
 import { Movie } from "../components/SsrEdgeDBMovies.tsx";
 import client from "../dbCloud.ts";
-// import { e } from "../dbCloud.ts";
+// import e from "../dbschema/edgeql-js/index.ts";
 // Add interface for the page data
 interface PageData extends State {
   movies: Movie[];

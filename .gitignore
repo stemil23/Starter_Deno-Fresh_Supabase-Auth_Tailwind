@@ -7,3 +7,6 @@ deno.lock
 .github/workflows/deploy.yml
 # edgedb.toml
 
+
+db/edgeql-js
+edgedb.toml

@@ -10,6 +10,7 @@ import * as $auth_middleware from "./routes/auth/_middleware.ts";
 import * as $auth_dashboard from "./routes/auth/dashboard.tsx";
 import * as $auth_welcome from "./routes/auth/welcome.tsx";
 import * as $db_test_api from "./routes/db-test-api.tsx";
+import * as $db_test_eqljs from "./routes/db-test-eqljs.tsx";
 import * as $db_test from "./routes/db-test.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $instructions from "./routes/instructions.tsx";
@@ -18,7 +19,7 @@ import * as $logout from "./routes/logout.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $ApiEdgeDbMovies from "./islands/ApiEdgeDbMovies.tsx";
 import * as $DynamicMenu from "./islands/DynamicMenu.tsx";
-import type { Manifest } from "$fresh/server.ts";
+import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
@@ -30,6 +31,7 @@ const manifest = {
     "./routes/auth/dashboard.tsx": $auth_dashboard,
     "./routes/auth/welcome.tsx": $auth_welcome,
     "./routes/db-test-api.tsx": $db_test_api,
+    "./routes/db-test-eqljs.tsx": $db_test_eqljs,
     "./routes/db-test.tsx": $db_test,
     "./routes/index.tsx": $index,
     "./routes/instructions.tsx": $instructions,
