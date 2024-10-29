@@ -1,6 +1,6 @@
 // First, create a new API endpoint
 import { Handlers } from "$fresh/server.ts";
-import client from "../../db/client.ts";
+import client from "../../dbCloud.ts";
 import e from "$generated/index.ts";
 
 export const handler: Handlers = {

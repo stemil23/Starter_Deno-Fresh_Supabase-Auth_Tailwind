@@ -5,7 +5,7 @@ import Layout from "../components/Layout.tsx";
 import { State } from "./_middleware.ts";
 import EdgeDBCloudTest from "../islands/ApiEdgeDbMovies.tsx";
 // import client from "../db.ts";
-import client from "../db/client.ts";
+import client from "../dbCloud.ts";
 import e from "$generated/index.ts";
 
 interface Movie {
