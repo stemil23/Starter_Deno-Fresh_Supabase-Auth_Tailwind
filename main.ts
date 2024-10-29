@@ -11,3 +11,11 @@ import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
 
 await start(manifest, config);
+
+// Horrible hack in order to fix `Deno.permissions.querySync` not being defined
+if (!Deno.permissions.querySync) {
+	(Deno.permissions as unknown as Record<string, unknown>)["querySync"] = (
+		_pd: Deno.PermissionDescriptor,
+	): { state: string } => ({ state: "granted" });
+}
+// End horrible hack
