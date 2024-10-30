@@ -1,11 +1,10 @@
-// deno-lint-ignore-file no-explicit-any
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../components/Layout.tsx";
 import { State } from "./_middleware.ts";
 import EdgeDBMovies from "../components/SsrEdgeDBMovies.tsx";
 import { Movie } from "../components/SsrEdgeDBMovies.tsx";
 import client from "../dbCloud.ts";
-import { e } from "../dbCloud.ts";
+import e from "$generated/index.ts";
 
 interface PageData extends State {
   movies: Movie[];
@@ -14,13 +13,13 @@ interface PageData extends State {
 export const handler: Handlers<PageData, State> = {
   async GET(_req, ctx) {
     try {
-      const query = e.select(e.Movie, (movie) => ({
+      const query = e.select(e.Movie, {
         id: true,
         title: true,
         actors: {
           name: true
         }
-      }));
+      });
 
       const movies = await query.run(client);
       
