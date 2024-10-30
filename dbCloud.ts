@@ -13,7 +13,7 @@ const dsn = Deno.env.get("EDGEDB_DSN");
 const secretKey = Deno.env.get("EDGEDB_CLOUD_KEY");
 
 if (!dsn || !secretKey) {
-    throw new Error("Missing required EdgeDB environment variables (EDGEDB_DSN or EDGEDB_CLOUD_KEY)");
+    throw new Error("Missing fricking required EdgeDB environment variables (EDGEDB_DSN or EDGEDB_CLOUD_KEY)");
 }
 
 const client = edgedb.createHttpClient({
