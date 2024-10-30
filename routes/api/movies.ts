@@ -15,6 +15,9 @@ interface MovieResponse {
 export const handler: Handlers = {
   async GET(_req, _ctx) {
     try {
+      // Verify connection is alive
+      await client.execute('SELECT 1');
+
       const moviesQuery = e.select(e.Movie, () => ({
         id: true,
         title: true,
@@ -24,7 +27,7 @@ export const handler: Handlers = {
       }));
 
       const movies = await moviesQuery.run(client);
-      console.log("Movies fetched:", movies);
+      console.log("Movies fetched successfully, count:", movies.length);
 
       const response: MovieResponse = {
         data: movies,
@@ -37,15 +40,20 @@ export const handler: Handlers = {
         },
       });
     } catch (error) {
-      console.error("Error fetching movies:", error);
+      console.error("Error in movies API:", error);
+      
+      const errorMessage = error instanceof Error 
+        ? `${error.name}: ${error.message}`
+        : "Unknown error occurred";
       
       return new Response(
         JSON.stringify({
           error: "Failed to fetch movies",
-          details: error instanceof Error ? error.message : "Unknown error occurred",
+          details: errorMessage,
+          timestamp: new Date().toISOString(),
         }),
         {
-          status: 500,
+          status: 503, // Service Unavailable instead of 500
           headers: {
             "Content-Type": "application/json",
           },

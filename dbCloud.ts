@@ -6,14 +6,31 @@ if (!Deno.permissions.querySync) {
     (Deno.permissions as unknown as Record<string, unknown>)["querySync"] = (
       _pd: Deno.PermissionDescriptor,
     ): { state: string } => ({ state: "granted" });
-  }
-  // End of workaround
+}
+
+// Ensure we have the required environment variables
+const dsn = Deno.env.get("EDGEDB_DSN");
+const secretKey = Deno.env.get("EDGEDB_CLOUD_KEY");
+
+if (!dsn || !secretKey) {
+    throw new Error("Missing required EdgeDB environment variables (EDGEDB_DSN or EDGEDB_CLOUD_KEY)");
+}
 
 const client = edgedb.createHttpClient({
-    // dsn: "edgedb://sql:buffy23@mydb--stemil23.c-78.i.aws.edgedb.cloud:5656/main?sslmode=require",
-    dsn: Deno.env.get("EDGEDB_DSN"),
-    secretKey: Deno.env.get("EDGEDB_CLOUD_KEY")
+    dsn,
+    secretKey,
+    tlsSecurity: "strict",
+    timeout: 10000, // 10 seconds timeout
 });
+
+// Test the connection on initialization
+try {
+    await client.execute('SELECT 1');
+    console.log("EdgeDB connection initialized successfully");
+} catch (error) {
+    console.error("Failed to initialize EdgeDB connection:", error);
+    throw error;
+}
 
 export default client;
 export { e };
