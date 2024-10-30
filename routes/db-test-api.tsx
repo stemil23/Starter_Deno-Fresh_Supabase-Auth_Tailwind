@@ -1,36 +1,32 @@
 // deno-lint-ignore-file no-explicit-any
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../components/Layout.tsx";
-// import HeroAbout from "../components/HeroAbout.tsx";
 import { State } from "./_middleware.ts";
 import EdgeDBCloudTest from "../islands/ApiEdgeDbMovies.tsx";
-import e from "$generated/index.ts";
-import client from "../dbCloud.ts";
-// import { e } from "../dbCloud.ts";
- 
-interface Movie {
-  id: string;
-  title: string | null;
-  actors: { name: string }[];
-}
 
 interface PageData {
-  movies: Movie[];
+  movies: any;
   token: string | null;
 }
 
 export const handler: Handlers<PageData, State> = {
-  async GET(_req, ctx) {
+  async GET(req, ctx) {
     try {
-      const query = e.select(e.Movie, () => ({
-        id: true,
-        title: true,
-        actors: {
-          name: true
-        }
-      }));
-
-      const movies = await query.run(client);
+      // Get the current URL to build the API URL with the same host
+      const url = new URL(req.url);
+      const apiUrl = `${url.protocol}//${url.host}/api/movies?limit=10&offset=0`;
+      
+      console.log("Fetching from API URL:", apiUrl);
+      const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const jsonResponse = await response.json();
+      console.log("API Response:", jsonResponse);
+      
+      const { data: movies } = jsonResponse;
       
       return ctx.render({
         movies,
@@ -48,7 +44,7 @@ export const handler: Handlers<PageData, State> = {
 
 export default function Home({ data }: PageProps<PageData>) {
   return (
-    <Layout isLoggedIn={Boolean(data.token)} title="DB Test using API and Fresh Island with 2 sec delay">
+    <Layout isLoggedIn={Boolean(data.token)} title="DB Test using API and Fresh Island with 1/2 sec delay">
       <EdgeDBCloudTest data={data.movies} />
     </Layout>
   );

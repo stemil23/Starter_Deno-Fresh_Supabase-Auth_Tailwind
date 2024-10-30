@@ -17,7 +17,7 @@ export default function EdgeDBCloudTest({ data: movies }: Props) {
     // Simulate loading delay
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // 2 second delay
+    }, 500); // 2 second delay
 
     return () => clearTimeout(timer);
   }, []);

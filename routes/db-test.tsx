@@ -3,8 +3,7 @@ import Layout from "../components/Layout.tsx";
 import { State } from "./_middleware.ts";
 import EdgeDBMovies from "../components/SsrEdgeDBMovies.tsx";
 import { Movie } from "../components/SsrEdgeDBMovies.tsx";
-import client from "../dbCloud.ts";
-import e from "$generated/index.ts";
+import client, { e } from "../dbCloud.ts";
 
 interface PageData extends State {
   movies: Movie[];
@@ -13,23 +12,27 @@ interface PageData extends State {
 export const handler: Handlers<PageData, State> = {
   async GET(_req, ctx) {
     try {
-      const query = e.select(e.Movie, {
+      const query = e.select(e.Movie, () => ({
         id: true,
         title: true,
-        actors: {
+        actors: () => ({
           name: true
-        }
-      });
+        }),
+        limit: 10
+      }));
 
       const movies = await query.run(client);
       
       return ctx.render({
         ...ctx.state,
-        movies: movies as Movie[],
+        movies,
       });
     } catch (error) {
       console.error('Database query failed:', error);
-      return new Response('Database error', { status: 500 });
+      return ctx.render({
+        ...ctx.state,
+        movies: [],
+      });
     }
   }
 }
