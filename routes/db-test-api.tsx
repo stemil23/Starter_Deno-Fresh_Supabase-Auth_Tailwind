@@ -12,22 +12,40 @@ interface PageData {
 export const handler: Handlers<PageData, State> = {
   async GET(req, ctx) {
     try {
-      // Get the current URL to build the API URL with the same host
       const url = new URL(req.url);
-      const apiUrl = `${url.protocol}//${url.host}/api/movies?limit=10&offset=0`;
+      const apiUrl = `${url.protocol}//${url.host}/api/movies`;
       
       console.log("Fetching from API URL:", apiUrl);
-      const response = await fetch(apiUrl);
+      
+      const response = await fetch(apiUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache'
+        },
+      });
       
       if (!response.ok) {
+        console.error('API Response not OK:', {
+          status: response.status,
+          statusText: response.statusText,
+          headers: Object.fromEntries(response.headers.entries())
+        });
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      const jsonResponse = await response.json();
-      console.log("API Response:", jsonResponse);
+      const text = await response.text();
+      console.log("Raw API Response:", text);
+      
+      const jsonResponse = JSON.parse(text);
+      console.log("Parsed API Response:", jsonResponse);
       
       const { data: movies } = jsonResponse;
       
+      if (!movies) {
+        console.error('No movies data in response:', jsonResponse);
+        throw new Error('No movies data in response');
+      }
+
       return ctx.render({
         movies,
         token: ctx.state.token || null
