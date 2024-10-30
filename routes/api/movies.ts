@@ -1,7 +1,7 @@
 // First, create a new API endpoint
 import { Handlers } from "$fresh/server.ts";
 import client from "../../dbCloud.ts";
-import e from "../../dbschema/edgeql-js/index.ts";
+import e from "$generated/index.ts";
 
 export const handler: Handlers = {
   async GET(_req, _ctx) {

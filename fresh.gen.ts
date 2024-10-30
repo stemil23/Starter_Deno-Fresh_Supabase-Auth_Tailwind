@@ -19,7 +19,7 @@ import * as $logout from "./routes/logout.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $ApiEdgeDbMovies from "./islands/ApiEdgeDbMovies.tsx";
 import * as $DynamicMenu from "./islands/DynamicMenu.tsx";
-import { type Manifest } from "$fresh/server.ts";
+import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
