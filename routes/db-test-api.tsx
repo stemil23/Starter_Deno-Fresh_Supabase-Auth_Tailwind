@@ -1,49 +1,47 @@
-// deno-lint-ignore-file no-explicit-any
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../components/Layout.tsx";
-// import HeroAbout from "../components/HeroAbout.tsx";
 import { State } from "./_middleware.ts";
-import EdgeDBCloudTest from "../islands/ApiEdgeDbMovies.tsx";
-import e from "$generated/index.ts";
-import client from "../dbCloud.ts";
-// import { e } from "../dbCloud.ts";
- 
-interface PageData {
-  movies: any;
-  token: string | null;
+import EdgeDBMovies from "../components/SsrEdgeDBMovies.tsx";
+import { Movie } from "../components/SsrEdgeDBMovies.tsx";
+
+interface PageData extends State {
+  movies: Movie[];
 }
 
 export const handler: Handlers<PageData, State> = {
-  async GET(_req, ctx) {
+  async GET(req, ctx) {
     try {
-      const query = e.select(e.Movie, () => ({
-        id: true,
-        title: true,
-        actors: {
-          name: true
-        }
-      }));
-
-      const movies = await query.run(client);
+      // Construct URL properly using request headers
+      const protocol = req.headers.get("x-forwarded-proto") || "http";
+      const host = req.headers.get("host") || "localhost:8000";
+      const apiUrl = `${protocol}://${host}/api/movies`;
+      
+      const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        throw new Error(`API request failed with status: ${response.status}`);
+      }
+      
+      const movies = await response.json();
       
       return ctx.render({
+        ...ctx.state,
         movies,
-        token: ctx.state.token || null
       });
     } catch (error) {
-      console.error('Error fetching movies:', error);
+      console.error('API request failed:', error);
       return ctx.render({
+        ...ctx.state,
         movies: [],
-        token: ctx.state.token || null
       });
     }
   }
 }
 
-export default function Home({ data }: PageProps<PageData>) {
+export default function Home(props: PageProps<PageData>) {
   return (
-    <Layout isLoggedIn={Boolean(data.token)} title="DB Test using API and Fresh Island with 1/2 sec delay">
-      <EdgeDBCloudTest data={data.movies} />
+    <Layout isLoggedIn={Boolean(props.data.token)} title="DB Test via API">
+      <EdgeDBMovies data={props.data.movies} />
     </Layout>
   );
 }

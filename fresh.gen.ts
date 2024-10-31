@@ -9,6 +9,7 @@ import * as $api_movies from "./routes/api/movies.ts";
 import * as $auth_middleware from "./routes/auth/_middleware.ts";
 import * as $auth_dashboard from "./routes/auth/dashboard.tsx";
 import * as $auth_welcome from "./routes/auth/welcome.tsx";
+import * as $db_test_api_island from "./routes/db-test-api-island.tsx";
 import * as $db_test_api from "./routes/db-test-api.tsx";
 import * as $db_test from "./routes/db-test.tsx";
 import * as $index from "./routes/index.tsx";
@@ -29,6 +30,7 @@ const manifest = {
     "./routes/auth/_middleware.ts": $auth_middleware,
     "./routes/auth/dashboard.tsx": $auth_dashboard,
     "./routes/auth/welcome.tsx": $auth_welcome,
+    "./routes/db-test-api-island.tsx": $db_test_api_island,
     "./routes/db-test-api.tsx": $db_test_api,
     "./routes/db-test.tsx": $db_test,
     "./routes/index.tsx": $index,
