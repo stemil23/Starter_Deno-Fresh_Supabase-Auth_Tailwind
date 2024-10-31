@@ -1,52 +1,39 @@
+// First, create a new API endpoint
 import { Handlers } from "$fresh/server.ts";
-import getClient from "../../dbCloud.ts";
+import client from "../../dbCloud.ts";
 import e from "$generated/index.ts";
-
-interface MovieResponse {
-  data: Array<{
-    id: string;
-    title: string;
-    actors: Array<{
-      name: string;
-    }>;
-  }>;
-}
 
 export const handler: Handlers = {
   async GET(_req, _ctx) {
     try {
-      const client = await getClient();
-
-      const moviesQuery = e.select(e.Movie, () => ({
+      const query = e.select(e.Movie, () => ({
         id: true,
         title: true,
         actors: {
-          name: true,
-        },
+          name: true
+        }
       }));
 
-      const movies = await moviesQuery.run(client);
-      console.log("Movies fetched successfully, count:", movies.length);
+      const movies = await query.run(client);
 
-      return new Response(JSON.stringify({ data: movies }), {
+      return new Response(JSON.stringify(movies), {
         headers: {
           "Content-Type": "application/json",
-          "Cache-Control": "no-store", // Disable caching temporarily for debugging
-        },
+        }
       });
     } catch (error) {
-      console.error("Error in movies API:", error);
+      console.error('Error fetching movies:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       
       return new Response(
-        JSON.stringify({
-          error: "Failed to fetch movies",
-          details: error instanceof Error ? error.message : "Unknown error",
-        }),
-        {
-          status: 503,
+        JSON.stringify({ 
+          error: 'Failed to fetch movies',
+          details: errorMessage 
+        }), {
+          status: 500,
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
     }
