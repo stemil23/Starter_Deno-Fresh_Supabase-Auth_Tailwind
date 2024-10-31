@@ -9,16 +9,18 @@ import * as $api_movies from "./routes/api/movies.ts";
 import * as $auth_middleware from "./routes/auth/_middleware.ts";
 import * as $auth_dashboard from "./routes/auth/dashboard.tsx";
 import * as $auth_welcome from "./routes/auth/welcome.tsx";
-import * as $db_test_api_island from "./routes/db-test-api-island.tsx";
 import * as $db_test_api from "./routes/db-test-api.tsx";
+import * as $db_test_island_api from "./routes/db-test-island-api.tsx";
+import * as $db_test_island from "./routes/db-test-island.tsx";
 import * as $db_test from "./routes/db-test.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $instructions from "./routes/instructions.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $logout from "./routes/logout.tsx";
 import * as $signup from "./routes/signup.tsx";
-import * as $ApiEdgeDbMovies from "./islands/ApiEdgeDbMovies.tsx";
 import * as $DynamicMenu from "./islands/DynamicMenu.tsx";
+import * as $EdgeDbMovies from "./islands/EdgeDbMovies.tsx";
+import * as $EdgeDbMoviesApi from "./islands/EdgeDbMoviesApi.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -30,8 +32,9 @@ const manifest = {
     "./routes/auth/_middleware.ts": $auth_middleware,
     "./routes/auth/dashboard.tsx": $auth_dashboard,
     "./routes/auth/welcome.tsx": $auth_welcome,
-    "./routes/db-test-api-island.tsx": $db_test_api_island,
     "./routes/db-test-api.tsx": $db_test_api,
+    "./routes/db-test-island-api.tsx": $db_test_island_api,
+    "./routes/db-test-island.tsx": $db_test_island,
     "./routes/db-test.tsx": $db_test,
     "./routes/index.tsx": $index,
     "./routes/instructions.tsx": $instructions,
@@ -40,8 +43,9 @@ const manifest = {
     "./routes/signup.tsx": $signup,
   },
   islands: {
-    "./islands/ApiEdgeDbMovies.tsx": $ApiEdgeDbMovies,
     "./islands/DynamicMenu.tsx": $DynamicMenu,
+    "./islands/EdgeDbMovies.tsx": $EdgeDbMovies,
+    "./islands/EdgeDbMoviesApi.tsx": $EdgeDbMoviesApi,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

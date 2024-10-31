@@ -11,10 +11,8 @@ interface PageData extends State {
 export const handler: Handlers<PageData, State> = {
   async GET(req, ctx) {
     try {
-      // Construct URL properly using request headers
-      const protocol = req.headers.get("x-forwarded-proto") || "http";
-      const host = req.headers.get("host") || "localhost:8000";
-      const apiUrl = `${protocol}://${host}/api/movies`;
+      const currentUrl = new URL(req.url);
+      const apiUrl = new URL("/api/movies", currentUrl.origin);
       
       const response = await fetch(apiUrl);
       

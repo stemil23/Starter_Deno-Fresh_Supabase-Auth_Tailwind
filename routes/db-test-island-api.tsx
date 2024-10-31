@@ -3,7 +3,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../components/Layout.tsx";
 // import HeroAbout from "../components/HeroAbout.tsx";
 import { State } from "./_middleware.ts";
-import EdgeDBCloudTest from "../islands/ApiEdgeDbMovies.tsx";
+import EdgeDBMoviesAPI from "../islands/EdgeDbMoviesApi.tsx";
 import e from "$generated/index.ts";
 import client from "../dbCloud.ts";
 // import { e } from "../dbCloud.ts";
@@ -43,7 +43,7 @@ export const handler: Handlers<PageData, State> = {
 export default function Home({ data }: PageProps<PageData>) {
   return (
     <Layout isLoggedIn={Boolean(data.token)} title="DB Test using API and Fresh Island with 1/2 sec delay">
-      <EdgeDBCloudTest data={data.movies} />
+      <EdgeDBMoviesAPI data={data.movies} />
     </Layout>
   );
 }
