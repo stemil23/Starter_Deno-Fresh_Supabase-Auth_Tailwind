@@ -6,15 +6,21 @@ import e from "$generated/index.ts";
 export const handler: Handlers = {
   async GET(_req, _ctx) {
     try {
-      const query = e.select(e.Movie, () => ({
+      // Add timeout and connection management
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Database query timeout')), 5000);
+      });
+
+      const queryPromise = e.select(e.Movie, () => ({
         id: true,
         title: true,
         actors: {
           name: true
         }
-      }));
+      })).run(client);
 
-      const movies = await query.run(client);
+      // Race between timeout and query
+      const movies = await Promise.race([queryPromise, timeoutPromise]);
 
       return new Response(JSON.stringify(movies), {
         headers: {
@@ -25,12 +31,15 @@ export const handler: Handlers = {
       console.error('Error fetching movies:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       
+      // Adjust status code based on error type
+      const status = error.message === 'Database query timeout' ? 504 : 500;
+
       return new Response(
         JSON.stringify({ 
           error: 'Failed to fetch movies',
           details: errorMessage 
         }), {
-          status: 500,
+          status,
           headers: {
             "Content-Type": "application/json"
           }

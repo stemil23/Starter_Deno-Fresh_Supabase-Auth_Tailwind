@@ -10,15 +10,26 @@ export const handler: Handlers<PageData, State> = {
   async GET(req, ctx) {
     try {
       const currentUrl = new URL(req.url);
-      const apiUrl = new URL("/api/movies", currentUrl.origin);
+      const apiUrl = `${currentUrl.protocol}//${currentUrl.host}/api/movies`;
       
-      const response = await fetch(apiUrl);
+      console.log('Attempting to fetch from:', apiUrl);
+      
+      const response = await fetch(apiUrl, {
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+      
+      console.log('Response status:', response.status);
       
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response body:', errorText);
         throw new Error(`API request failed with status: ${response.status}`);
       }
       
       const movies = await response.json();
+      console.log('Received movies:', movies);
       
       return ctx.render({
         ...ctx.state,
