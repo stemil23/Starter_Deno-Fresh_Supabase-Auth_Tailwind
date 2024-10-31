@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import client from "../../dbCloud.ts";
+import getClient from "../../dbCloud.ts";
 import e from "$generated/index.ts";
 
 interface MovieResponse {
@@ -15,8 +15,7 @@ interface MovieResponse {
 export const handler: Handlers = {
   async GET(_req, _ctx) {
     try {
-      // Verify connection is alive
-      await client.execute('SELECT 1');
+      const client = await getClient();
 
       const moviesQuery = e.select(e.Movie, () => ({
         id: true,
@@ -29,31 +28,22 @@ export const handler: Handlers = {
       const movies = await moviesQuery.run(client);
       console.log("Movies fetched successfully, count:", movies.length);
 
-      const response: MovieResponse = {
-        data: movies,
-      };
-
-      return new Response(JSON.stringify(response), {
+      return new Response(JSON.stringify({ data: movies }), {
         headers: {
           "Content-Type": "application/json",
-          "Cache-Control": "public, max-age=60",
+          "Cache-Control": "no-store", // Disable caching temporarily for debugging
         },
       });
     } catch (error) {
       console.error("Error in movies API:", error);
       
-      const errorMessage = error instanceof Error 
-        ? `${error.name}: ${error.message}`
-        : "Unknown error occurred";
-      
       return new Response(
         JSON.stringify({
           error: "Failed to fetch movies",
-          details: errorMessage,
-          timestamp: new Date().toISOString(),
+          details: error instanceof Error ? error.message : "Unknown error",
         }),
         {
-          status: 503, // Service Unavailable instead of 500
+          status: 503,
           headers: {
             "Content-Type": "application/json",
           },
