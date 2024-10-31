@@ -1,30 +1,25 @@
-// deno-lint-ignore-file no-explicit-any
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../components/Layout.tsx";
-// import HeroAbout from "../components/HeroAbout.tsx";
 import { State } from "./_middleware.ts";
 import EdgeDBCloudTest from "../islands/EdgeDbMovies.tsx";
-import e from "$generated/index.ts";
-import client from "../dbCloud.ts";
-// import { e } from "../dbCloud.ts";
- 
+import { getAllMovies } from "../utils/edgedb/queries/movies.ts";
+
+interface Movie {
+  id: string;
+  title: string;
+  year?: number;
+  description?: string;
+}
+
 interface PageData {
-  movies: any;
+  movies: Movie[];
   token: string | null;
 }
 
 export const handler: Handlers<PageData, State> = {
   async GET(_req, ctx) {
     try {
-      const query = e.select(e.Movie, () => ({
-        id: true,
-        title: true,
-        actors: {
-          name: true
-        }
-      }));
-
-      const movies = await query.run(client);
+      const movies = await getAllMovies();
       
       return ctx.render({
         movies,
@@ -42,8 +37,10 @@ export const handler: Handlers<PageData, State> = {
 
 export default function Home({ data }: PageProps<PageData>) {
   return (
-    <Layout isLoggedIn={Boolean(data.token)} title="DB Test Fresh Island with 1/2 sec delay">
-      <EdgeDBCloudTest data={data.movies} />
+    <Layout isLoggedIn={Boolean(data.token)} title="DB Test Fresh Island">
+      <div class="mt-10 px-5 mx-auto flex max-w-screen-md flex-col justify-center">
+        <EdgeDBCloudTest data={data.movies} />
+      </div>
     </Layout>
   );
 }

@@ -10,9 +10,7 @@ export default function Nav({ loggedIn }: NavProps) {
     { name: "About", href: "/about", id: "about" },
     { name: "Instructions", href: "/instructions", id: "instructions" },
     { name: "DB Test", href: "/db-test", id: "db-test" },
-    { name: "DB Test API", href: "/db-test-api", id: "db-test-api" },
     { name: "DB Test Island", href: "/db-test-island", id: "db-test-island" },
-    { name: "DB Test Island API", href: "/db-test-island-api", id: "db-test-api-island" }
   ];
 
   return (

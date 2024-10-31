@@ -25,7 +25,8 @@
   "lint": {
     "rules": {
       "tags": ["fresh", "recommended"],
-      "exclude": ["no-unused-vars"]
+      "exclude": ["no-unused-vars"],
+      "ignore": ["no-explicit-any"]
     },
     "exclude": ["**/dbschema/edgeql-js/**/*"]
   },

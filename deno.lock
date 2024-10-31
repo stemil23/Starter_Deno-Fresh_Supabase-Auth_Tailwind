@@ -2156,6 +2156,7 @@
     "https://deno.land/x/edgedb@v1.4.1/_src/reflection/queries/functions.ts": "b46ca1ba64a85caa1569800059f563f7e0da0a098dd9d0a6baa0cc896d351ecb",
     "https://deno.land/x/edgedb@v1.4.1/_src/reflection/queries/globals.ts": "8e2fcd33ec8c66e94ea67f0971e2384d479e8e1a794c2ffbe40e83449df63c8b",
     "https://deno.land/x/edgedb@v1.4.1/_src/reflection/queries/operators.ts": "2f864c24d411d9e1a475842fa9de45bf8bbbab7f15aa79b01a11d4f32e9447ab",
+    "https://deno.land/x/edgedb@v1.4.1/_src/reflection/queries/queryTypes.ts": "a6aa21317c1bf3723ba37a731d656077aafee0d6aa8432fa90e31bbc70509597",
     "https://deno.land/x/edgedb@v1.4.1/_src/reflection/queries/scalars.ts": "8f85b0283e6ee1d00c353a6a14f9cd9112e2caf3e6038c7839591039af7f2997",
     "https://deno.land/x/edgedb@v1.4.1/_src/reflection/queries/types.ts": "8bf128042ff717741a9704160af26d78fd68cb7e69aa3a0804f25184c3f80937",
     "https://deno.land/x/edgedb@v1.4.1/_src/reflection/reservedKeywords.ts": "dd55d589e10f10588a579d43cf7f3e239e140f313a2ce1594946382f155fd7f4",

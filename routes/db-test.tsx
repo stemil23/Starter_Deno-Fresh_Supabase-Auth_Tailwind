@@ -1,46 +1,26 @@
+// deno-lint-ignore-file no-explicit-any
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../components/Layout.tsx";
+import EdgeDBMovies from "../components/EdgeDBMovies.tsx";
 import { State } from "./_middleware.ts";
-import EdgeDBMovies from "../components/SsrEdgeDBMovies.tsx";
-import { Movie } from "../components/SsrEdgeDBMovies.tsx";
-import client, { e } from "../dbCloud.ts";
+import { getAllMovies } from "../utils/edgedb/queries/movies.ts";
 
-interface PageData extends State {
-  movies: Movie[];
-}
-
-export const handler: Handlers<PageData, State> = {
+export const handler: Handlers<any, State> = {
   async GET(_req, ctx) {
-    try {
-      const query = e.select(e.Movie, () => ({
-        id: true,
-        title: true,
-        actors: () => ({
-          name: true
-        }),
-        limit: 10
-      }));
-
-      const movies = await query.run(client);
-      
-      return ctx.render({
-        ...ctx.state,
-        movies,
-      });
-    } catch (error) {
-      console.error('Database query failed:', error);
-      return ctx.render({
-        ...ctx.state,
-        movies: [],
-      });
-    }
+    const movies = await getAllMovies();
+    return ctx.render({
+      ...ctx.state,
+      movies,
+    });
   }
 }
 
-export default function Home(props: PageProps<PageData>) {
+export default function Home(props: PageProps) {
   return (
-    <Layout isLoggedIn={Boolean(props.data.token)} title="DB Test SSR">
-      <EdgeDBMovies data={props.data.movies} />
+    <Layout isLoggedIn={props.data.token}>
+      <div class="mt-10 px-5 mx-auto flex max-w-screen-md flex-col justify-center">
+        <EdgeDBMovies movies={props.data.movies} />
+      </div>
     </Layout>
   );
 }
