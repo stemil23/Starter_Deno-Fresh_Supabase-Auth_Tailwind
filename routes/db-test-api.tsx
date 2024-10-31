@@ -25,11 +25,18 @@ export const handler: Handlers<PageData, State> = {
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Error response body:', errorText);
-        throw new Error(`API request failed with status: ${response.status}`);
+        return new Response(`API request failed: ${errorText}`, { 
+          status: response.status,
+          headers: { 'Content-Type': 'text/plain' }
+        });
       }
       
       const movies = await response.json();
-      console.log('Received movies:', movies);
+      
+      if (!Array.isArray(movies)) {
+        console.error('Received invalid movies data:', movies);
+        return new Response('Invalid API response format', { status: 500 });
+      }
       
       return ctx.render({
         ...ctx.state,
@@ -37,7 +44,10 @@ export const handler: Handlers<PageData, State> = {
       });
     } catch (error) {
       console.error('API request failed:', error);
-      return new Response('API Error', { status: 500 });
+      return new Response(`Internal Server Error: ${error.message}`, { 
+        status: 500,
+        headers: { 'Content-Type': 'text/plain' }
+      });
     }
   }
 }
