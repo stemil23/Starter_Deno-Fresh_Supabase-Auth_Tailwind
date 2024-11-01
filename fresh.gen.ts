@@ -14,6 +14,9 @@ import * as $index from "./routes/index.tsx";
 import * as $instructions from "./routes/instructions.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $logout from "./routes/logout.tsx";
+import * as $movies_id_edit from "./routes/movies/[id]/edit.tsx";
+import * as $movies_id_index from "./routes/movies/[id]/index.tsx";
+import * as $movies_new from "./routes/movies/new.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $DynamicMenu from "./islands/DynamicMenu.tsx";
 import * as $EdgeDbMovies from "./islands/EdgeDbMovies.tsx";
@@ -33,6 +36,9 @@ const manifest = {
     "./routes/instructions.tsx": $instructions,
     "./routes/login.tsx": $login,
     "./routes/logout.tsx": $logout,
+    "./routes/movies/[id]/edit.tsx": $movies_id_edit,
+    "./routes/movies/[id]/index.tsx": $movies_id_index,
+    "./routes/movies/new.tsx": $movies_new,
     "./routes/signup.tsx": $signup,
   },
   islands: {
