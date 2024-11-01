@@ -11,15 +11,18 @@ if (!Deno.permissions.querySync) {
 
 
 function createDbClient() {
-  // Check if we're using EdgeDB Cloud
+  const isDeploy = Deno.env.get("DENO_DEPLOYMENT_ID") !== undefined;
   const isCloud = Deno.env.get("EDGEDB_DSN") && Deno.env.get("EDGEDB_CLOUD_KEY");
-  if (isCloud) {
+
+  if (isDeploy || isCloud) {
+    // Always use HTTP client for Deno Deploy or EdgeDB Cloud
     return edgedb.createHttpClient({
-        dsn: Deno.env.get("EDGEDB_DSN"),
-        secretKey: Deno.env.get("EDGEDB_CLOUD_KEY")
+      dsn: Deno.env.get("EDGEDB_DSN"),
+      secretKey: Deno.env.get("EDGEDB_CLOUD_KEY")
     });
   }
-  // Default to local client
+  
+  // Default to local client for development
   return edgedb.createClient();
 }
 const client = createDbClient();
