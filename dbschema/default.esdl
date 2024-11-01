@@ -14,7 +14,10 @@ module default {
     }
     
     property slug := std::str_lower(
-        std::re_replace(r"[-\s]+", "-", std::re_replace(r"[^\w\s-]", "", .title))
+        std::re_replace(r"[-\s]+", "-", 
+            std::re_replace(r"[^\w\s-]", "", .title),
+            flags := 'g'
+        )
     );
 
     # Multi-link to associate multiple actors with a movie

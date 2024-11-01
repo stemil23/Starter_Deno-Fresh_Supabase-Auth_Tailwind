@@ -1,9 +1,4 @@
-interface Movie {
-  id: string;
-  title: string;
-  subtitle: string;
-  slug: string;
-}
+import { Movie } from "../dbschema/interfaces.ts";
 
 interface EdgeDBMoviesProps {
   movies: Movie[];

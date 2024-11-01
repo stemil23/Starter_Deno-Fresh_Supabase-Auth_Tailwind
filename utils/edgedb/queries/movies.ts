@@ -1,5 +1,6 @@
 import client from "../client.ts";
 import e from "$generated/index.ts";
+// import { Movie } from "$interfaces/interfaces.ts";
 
 export async function getAllMovies() {
   const query = e.select(e.Movie, () => ({

@@ -72,7 +72,7 @@ export default function MovieDetail({ data }: PageProps<PageData>) {
             {/* <h3 class="text-3xl font-bold mb-4">{movie.all_caps_title}</h3> */}
             <h3 class="text-3xl font-bold mb-4">{movie.subtitle}, {movie.slug}</h3>
             <a
-              href={`/movies/${movie.id}/edit`}
+              href={`/movies/${movie.slug}/edit`}
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Edit

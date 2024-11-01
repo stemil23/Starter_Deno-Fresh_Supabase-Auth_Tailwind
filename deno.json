@@ -20,7 +20,10 @@
     "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.21.0",
     "edgedb": "https://deno.land/x/edgedb@v1.4.1/mod.ts",
     "edgedb/": "https://deno.land/x/edgedb@v1.4.1/",
-    "$generated/": "./db/edgeql-js/"
+    "$generated/": "./db/edgeql-js/",
+    "$utils/edgedb/": "./utils/edgedb/",
+    "$interfaces/": "./dbschema/interfaces.ts/",
+    "$queries/": "./utils/edgedb/queries/"
   },
   "lint": {
     "rules": {
