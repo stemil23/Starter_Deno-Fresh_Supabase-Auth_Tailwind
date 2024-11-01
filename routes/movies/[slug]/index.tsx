@@ -1,9 +1,13 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import client, { e } from "../../../utils/edgedb/client.ts";
 
+
 interface Movie {
   id: string;
   title: string;
+  slug: string;
+  subtitle: string;
+
 }
 
 interface PageData {
@@ -13,12 +17,14 @@ interface PageData {
 
 export const handler: Handlers<PageData> = {
   async GET(_req, ctx) {
-    const id = ctx.params.id;
+    const slug = ctx.params.slug;
     try {
       const movie = await e.select(e.Movie, (movie) => ({
         id: true,
         title: true,
-        filter: e.op(movie.id, "=", e.uuid(id)),
+        slug: true,
+        subtitle: true,
+        filter: e.op(movie.slug, "=", slug),
       })).run(client);
 
       if (!movie) {
@@ -63,6 +69,8 @@ export default function MovieDetail({ data }: PageProps<PageData>) {
         <div class="p-6">
           <div class="flex justify-between items-start">
             <h1 class="text-3xl font-bold mb-4">{movie.title}</h1>
+            {/* <h3 class="text-3xl font-bold mb-4">{movie.all_caps_title}</h3> */}
+            <h3 class="text-3xl font-bold mb-4">{movie.subtitle}, {movie.slug}</h3>
             <a
               href={`/movies/${movie.id}/edit`}
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

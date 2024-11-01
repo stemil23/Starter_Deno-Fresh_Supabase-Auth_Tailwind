@@ -15,6 +15,7 @@ export const handler: Handlers<FormData> = {
     try {
       const form = await req.formData();
       const title = form.get("title")?.toString();
+      const subtitle = form.get("subtitle")?.toString();
     //   const year = parseInt(form.get("year")?.toString() || "0");
     //   const rating = parseFloat(form.get("rating")?.toString() || "0");
       
@@ -28,6 +29,7 @@ export const handler: Handlers<FormData> = {
       // Insert movie into EdgeDB
       await e.insert(e.Movie, {
         title: title,
+        subtitle: subtitle,
       }).run(client);
 
       // Redirect to movies list page after successful insertion
@@ -66,6 +68,18 @@ export default function NewMovie({ data }: PageProps<FormData>) {
             <input
               type="text"
               name="title"
+              required
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            />
+          </label>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">
+            Subtitle
+            <input
+              type="text"
+              name="subtitle"
               required
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
             />

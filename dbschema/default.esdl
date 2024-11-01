@@ -1,11 +1,65 @@
 using extension edgeql_http;
+using extension ai;
+
 module default {
-  type Person {
-    required name: str;
+  # Movie type with multi-link to Person and trigger to update MovieWithActorsText
+  type Movie {
+    required property title -> str{
+      constraint exclusive;
+    };
+
+    required property subtitle -> str;
+    property all_caps_title -> str {
+        default := std::str_upper(.title);
+    }
+    
+    property slug := std::str_lower(
+        std::re_replace(r"[-\s]+", "-", std::re_replace(r"[^\w\s-]", "", .title))
+    );
+
+    # Multi-link to associate multiple actors with a movie
+    multi link actors -> Person;
+
+    # Trigger to insert into MovieWithActorsText after a Movie insert
+    trigger mwa_insert after insert for each do (
+      INSERT MovieWithActorsTxt {
+        title := __new__.title,
+        actors := (
+          SELECT array_join(
+            array_agg((SELECT __new__.actors.name)), ', '
+          )
+        )
+      }
+    );
+
+    # Trigger to delete from MovieWithActorsText after a Movie delete
+    trigger mwa_delete after delete for each do (
+      DELETE MovieWithActorsTxt
+      FILTER .title = __old__.title
+    );
   }
 
-  type Movie {
-    required title: str;
-    multi actors: Person;
+  # Person type with exclusive name property and computed link to movies
+  type Person {
+    required property name -> str {
+      constraint exclusive;
+    };
+
+    # Computed link to movies where the person acted
+    multi link acted_in := .<actors[is Movie];
   }
-};
+
+  # Type to store denormalized movie data with a comma-separated list of actors as text
+  type MovieWithActorsTxt {
+     property title -> str {
+      constraint exclusive;
+    };
+
+    # Property to store a comma-separated list of actor names
+     property actors -> str;
+
+    # Deferred AI index on concatenated title and actors properties using 'mistral-embed'
+    deferred index ext::ai::index(embedding_model := 'mistral-embed')
+      on (.title ++ ' ' ++ .actors);
+  }
+}

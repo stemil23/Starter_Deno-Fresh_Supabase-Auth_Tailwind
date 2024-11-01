@@ -15,7 +15,8 @@ import * as $instructions from "./routes/instructions.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $logout from "./routes/logout.tsx";
 import * as $movies_id_edit from "./routes/movies/[id]/edit.tsx";
-import * as $movies_id_index from "./routes/movies/[id]/index.tsx";
+import * as $movies_slug_edit from "./routes/movies/[slug]/edit.tsx";
+import * as $movies_slug_index from "./routes/movies/[slug]/index.tsx";
 import * as $movies_new from "./routes/movies/new.tsx";
 import * as $signup from "./routes/signup.tsx";
 import * as $DynamicMenu from "./islands/DynamicMenu.tsx";
@@ -37,7 +38,8 @@ const manifest = {
     "./routes/login.tsx": $login,
     "./routes/logout.tsx": $logout,
     "./routes/movies/[id]/edit.tsx": $movies_id_edit,
-    "./routes/movies/[id]/index.tsx": $movies_id_index,
+    "./routes/movies/[slug]/edit.tsx": $movies_slug_edit,
+    "./routes/movies/[slug]/index.tsx": $movies_slug_index,
     "./routes/movies/new.tsx": $movies_new,
     "./routes/signup.tsx": $signup,
   },

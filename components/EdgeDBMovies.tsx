@@ -1,6 +1,8 @@
 interface Movie {
   id: string;
   title: string;
+  subtitle: string;
+  slug: string;
 }
 
 interface EdgeDBMoviesProps {
@@ -26,16 +28,21 @@ export default function EdgeDBMovies({ movies }: EdgeDBMoviesProps) {
             class="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
           >
             <div class="flex justify-between items-start">
-              <h3 class="text-xl font-semibold mb-2">
-                <a
-                  href={`/movies/${movie.id}`}
-                  class="text-blue-600 hover:text-blue-800 hover:underline"
-                >
-                  {movie.title}
-                </a>
-              </h3>
+              <div>
+                <h3 class="text-xl font-semibold mb-2">
+                  <a
+                    href={`/movies/${movie.slug}`}
+                    class="text-blue-600 hover:text-blue-800 hover:underline"
+                  >
+                    {movie.title}
+                  </a>
+                </h3>
+                {movie.subtitle && (
+                  <p class="text-gray-600">{movie.subtitle}</p>
+                )}
+              </div>
               <a
-                href={`/movies/${movie.id}/edit`}
+                href={`/movies/${movie.slug}/edit`}
                 class="text-blue-500 hover:text-blue-700"
               >
                 Edit
