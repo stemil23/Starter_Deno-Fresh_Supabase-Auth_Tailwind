@@ -23,14 +23,6 @@ jobs:
         with:
           deno-version: v2.x
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-
-      - name: Install step
-        run: "EDGEDB_DSN=\"edgedb://sql:buffy23@mydb--stemil23.c-78.i.aws.edgedb.cloud:5656/main?sslmode=require\" EDGEDB_SECRET_KEY=\"nbwt1_eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJlZGIuZC5hbGwiOnRydWUsImVkYi5pIjpbInN0ZW1pbDIzL215ZGIiXSwiZWRiLnIuYWxsIjp0cnVlLCJpYXQiOjE3MzAyNDc2NTIsImlzcyI6ImF3cy5lZGdlZGIuY2xvdWQiLCJqdGkiOiIwa2RfeHBaVUVlLTRjY09nLUZrVUR3Iiwic3ViIjoiRWdQbnNHbXNFZS16SENlenJ6UlBJUSJ9.NBHy1xKCYz77oHhpLD8pf2MuJ0O-WbgT-i2bAFH-odqFB1dM8KGDVUVLdRHPTaCO4K3XlsSyHlFa1nm7METn2Q\" deno run -A https://deno.land/x/edgedb/generate.ts edgeql-js --output-dir=./db/edgeql-js --target deno"
-
       - name: Build step
         run: "rm -f deno.lock && deno task build"
 
